@@ -6,7 +6,9 @@ var utils = require('./utils')
 module.exports = {
   messages: {
     get: function (req, res) {
-      utils.sendResponse(res, models.messages.get());
+      models.messages.get(function(results){
+        utils.sendResponse(res, results);
+      });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
         console.log("in post req.body", req.body);

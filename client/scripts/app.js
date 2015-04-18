@@ -21,8 +21,9 @@ var Messages = Backbone.Collection.extend({
 
   parse: function(response, options){
     var results = [];
-    for( var i = response.results.length-1; i >= 0; i-- ){
-      results.push(response.results[i]);
+    for( var i = response.length-1; i >= 0; i-- ){
+      console.log(response[i]);
+      results.push(response[i]);
     }
     return results;
   }
@@ -66,9 +67,9 @@ var FormView = Backbone.View.extend({
 
 var MessageView = Backbone.View.extend({
 
-  template: _.template('<div class="chat"> \
+  template: _.template('<div class="chat"><div class="<%- id %>"></div> \
                        <div class="user"><%- username %></div> \
-                       <div class="text"><%- message %></div> \
+                       <div class="text"><%- text %></div> \
                        </div>'),
 
   render: function(){
@@ -90,10 +91,10 @@ var MessagesView = Backbone.View.extend({
   },
 
   renderMessage: function(message){
-    if( !this.onscreenMessages[message.get('objectId')] ){
+    if( !this.onscreenMessages[message.get('id')] ){
       var messageView = new MessageView({model: message});
       this.$el.prepend(messageView.render());
-      this.onscreenMessages[message.get('objectId')] = true;
+      this.onscreenMessages[message.get('id')] = true;
     }
   }
 

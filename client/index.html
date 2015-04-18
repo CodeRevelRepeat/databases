@@ -31,7 +31,7 @@
         messages.loadMsgs();
         var formView = new FormView({el: $('#main'), collection: messages})
         var messagesView = new MessagesView({el: $('#chats'), collection: messages});
-        //TODO setInterval( messages.loadMsgs.bind(messages), 1000 );
+        setInterval( messages.loadMsgs.bind(messages), 1000 );
         // jQuery-based app initialization
         //app.init();
       });

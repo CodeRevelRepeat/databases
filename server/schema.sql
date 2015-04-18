@@ -8,13 +8,13 @@ set foreign_key_checks=0;
 
 CREATE TABLE `User` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(40),
+  `username` VARCHAR(40),
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Room` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(40),
+  `roomname` VARCHAR(40),
   PRIMARY KEY (`id`)
 );
 
