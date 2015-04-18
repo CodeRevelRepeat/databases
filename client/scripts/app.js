@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 var Message = Backbone.Model.extend({
-  url: 'http://127.0.0.1:3000/classes/chatterbox',
+  url: 'http://127.0.0.1:3000/classes/messages',
   defaults: {
     username: ''
   }
@@ -13,10 +13,10 @@ var Message = Backbone.Model.extend({
 
 var Messages = Backbone.Collection.extend({
   model: Message,
-  url: 'http://127.0.0.1:3000/classes/chatterbox',
+  url: 'http://127.0.0.1:3000/classes/messages',
 
   loadMsgs: function(){
-    this.fetch({data: { order: '-createdAt' }});
+    this.fetch();
   },
 
   parse: function(response, options){
@@ -45,8 +45,9 @@ var FormView = Backbone.View.extend({
 
     var $text = this.$('#message');
     this.collection.create({
-      username: window.location.search.substr(10),
-      text: $text.val()
+      roomname: "laurensroom",
+      username: "lauren",
+      message: $text.val()
     });
     $text.val('');
   },
@@ -65,9 +66,9 @@ var FormView = Backbone.View.extend({
 
 var MessageView = Backbone.View.extend({
 
-  template: _.template('<div class="chat" data-id="<%- objectId %>"> \
+  template: _.template('<div class="chat"> \
                        <div class="user"><%- username %></div> \
-                       <div class="text"><%- text %></div> \
+                       <div class="text"><%- message %></div> \
                        </div>'),
 
   render: function(){

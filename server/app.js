@@ -1,5 +1,6 @@
 var express = require('express');
 var db = require('./db');
+db.connect();
 
 // Middleware
 var morgan = require('morgan');
@@ -11,12 +12,30 @@ var router = require('./routes.js');
 var app = express();
 module.exports.app = app;
 
+//INTERCEPT OPTIONS
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' === req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+//CORS headers
+app.use(allowCrossDomain);
+
 // Set what we are listening on.
 app.set("port", 3000);
 
 // Logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
+
 
 // Set up our routes
 app.use("/classes", router);
@@ -29,7 +48,6 @@ if (!module.parent) {
   app.listen(app.get("port"));
   console.log("Listening on", app.get("port"));
 }
-// db.connect();
 
 // db.insert()
 // db.query()
