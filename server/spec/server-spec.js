@@ -47,10 +47,11 @@ describe("Persistent Node Chat Server", function() {
 
         // TODO: You might have to change this test to get all the data from
         // your message table, since this is schema-dependent.
-        var queryString = "SELECT * FROM Messages";
+      var queryString = "SELECT Messages.id, Messages.text, User.username, Room.roomname FROM Messages, User, Room WHERE user.id = Messages.user_id AND Room.id = Messages.room_id;";
+        // var queryString = "SELECT * FROM Messages";
         var queryArgs = [];
 
-        dbConnection.query(queryString, queryArgs, function(err, results) {
+        dbConnection.query(queryString, function(err, results) {
           // Should have one result:
           expect(results.length).to.equal(1);
 
